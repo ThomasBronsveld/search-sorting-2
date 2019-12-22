@@ -43,11 +43,34 @@ public class TransportGraph {
      * @param to
      */
     private void addEdge(int from, int to) {
-        // TODO
-        numberOfConnections++;
-        //from 6 to = 9
-        Connection c = new Connection(stationList.get(from), stationList.get(to));
-        connections[from][to] = c; //zet Connection object neer.
+        //We willen een List van een integer array([station linkerkant, station rechterkant) terugkrijgen.
+        /*
+        * Strikt van het voorbeeld genomen met gekleurde lijnen:
+        * station B heeft als Adjecencies: {[E, F], [A, C]}
+        * station G heeft als Adjecencies: {[F, J], [A, D]}
+         */
+        Station fromStation = stationList.get(from);
+        Station prevStation;
+        Station nextStation;
+        int prevLocation;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for(Line l : fromStation.getLines()) {
+            for (int i = 0; i < l.getStationsOnLine().size(); i++) {
+                if (l.getStationsOnLine().get(i).equals(fromStation)) {
+                    list.add(stationList.indexOf(l.getStationsOnLine().get(i - 1)));
+                    list.add(stationList.indexOf(l.getStationsOnLine().get(i + 1)));
+                }
+
+            }
+            adjacencyLists[from] = list;
+
+
+            // TODO
+            numberOfConnections++;
+            //from 6 to = 9
+            Connection c = new Connection(stationList.get(from), stationList.get(to));
+            connections[from][to] = c; //zet Connection object neer.
+        }
 
     }
 
