@@ -11,7 +11,7 @@ public class TransportGraph {
     private List<Integer>[] adjacencyLists;
     private Connection[][] connections;
 
-    public TransportGraph (int size) {
+    public TransportGraph(int size) {
         this.numberOfStations = size;
         stationList = new ArrayList<>(size);
         stationIndices = new HashMap<>();
@@ -24,34 +24,48 @@ public class TransportGraph {
 
     /**
      * @param vertex Station to be added to the stationList
-     * The method also adds the station with it's index to the map stationIndices
+     *               The method also adds the station with it's index to the map stationIndices
      */
     public void addVertex(Station vertex) {
         // TODO
+        stationList.add(vertex);
+//        System.out.println(stationList.size());
+        stationIndices.put(vertex.getStationName(), stationList.size());
     }
 
 
     /**
-     * Method to add an edge to a adjancencyList. The indexes of the vertices are used to define the edge.
+     * Method to add an edge to a adjacencyList. The indexes of the vertices are used to define the edge.
      * Method also increments the number of edges, that is number of Connections.
-     * The grap is bidirected, so edge(to, from) should also be added.
+     * The graph is bidirectional, so edge(to, from) should also be added.
+     *
      * @param from
      * @param to
      */
     private void addEdge(int from, int to) {
         // TODO
+        numberOfConnections++;
+        //from 6 to = 9
+        Connection c = new Connection(stationList.get(from), stationList.get(to));
+        connections[from][to] = c; //zet Connection object neer.
+
     }
 
 
     /**
      * Method to add an edge in the form of a connection between stations.
      * The method also adds the edge as an edge of indices by calling addEdge(int from, int to).
-     * The method adds the connecion to the connections 2D-array.
+     * The method adds the connection to the connections 2D-array.
      * The method also builds the reverse connection, Connection(To, From) and adds this to the connections 2D-array.
+     *
      * @param connection The edge as a connection between stations
      */
     public void addEdge(Connection connection) {
         // TODO
+        //Allebei de richtingen
+        this.addEdge(stationList.indexOf(connection.getFrom()), stationList.indexOf(connection.getTo()));
+        this.addEdge(stationList.indexOf(connection.getTo()), stationList.indexOf(connection.getFrom()));
+
     }
 
     public List<Integer> getAdjacentVertices(int index) {
@@ -90,7 +104,7 @@ public class TransportGraph {
             resultString.append(stationList.get(indexVertex) + ": ");
             int loopsize = adjacencyLists[indexVertex].size() - 1;
             for (int indexAdjacent = 0; indexAdjacent < loopsize; indexAdjacent++) {
-                resultString.append(stationList.get(adjacencyLists[indexVertex].get(indexAdjacent)).getStationName() + "-" );
+                resultString.append(stationList.get(adjacencyLists[indexVertex].get(indexAdjacent)).getStationName() + "-");
             }
             resultString.append(stationList.get(adjacencyLists[indexVertex].get(loopsize)).getStationName() + "\n");
         }
@@ -116,55 +130,85 @@ public class TransportGraph {
 
         /**
          * Method to add a line to the list of lines and add stations to the line.
+         *
          * @param lineDefinition String array that defines the line. The array should start with the name of the line,
          *                       followed by the type of the line and the stations on the line in order.
          * @return
          */
         public Builder addLine(String[] lineDefinition) {
-            // TODO
+            Line newLine = new Line(lineDefinition[0], lineDefinition[1]);
+            for (Station station : stationSet) {
+                newLine.addStation(station);
+            }
             return this;
         }
 
 
-        /**
-         * Method that reads all the lines and their stations to build a set of stations.
-         * Stations that are on more than one line will only appear once in the set.
-         * @return
-         */
-        public Builder buildStationSet() {
-            // TODO
-            return this;
+    /**
+     * Method that reads all the lines and their stations to build a set of stations.
+     * Stations that are on more than one line will only appear once in the set.
+     *
+     * @return
+     */
+    public Builder buildStationSet() {
+        // TODO
+        for (Line l : lineList
+             ) {
+            for (Station s : l.getStationsOnLine()
+                 ) {
+                if(!stationSet.contains(s)){
+                    stationSet.add(s);
+                }
+            }
         }
-
-        /**
-         * For every station on the set of station add the lines of that station to the lineList in the station
-         * @return
-         */
-        public Builder addLinesToStations() {
-            // TODO
-            return this;
-        }
-
-        /**
-         * Method that uses the list of Lines to build connections from the consecutive stations in the stationList of a line.
-         * @return
-         */
-        public Builder buildConnections() {
-            // TODO
-            return this;
-        }
-
-        /**
-         * Method that builds the graph.
-         * All stations of the stationSet are addes as vertices to the graph.
-         * All connections of the connectionSet are addes as edges to the graph.
-         * @return
-         */
-        public TransportGraph build() {
-            TransportGraph graph = new TransportGraph(stationSet.size());
-            // TODO
-            return graph;
-        }
-
+        return this;
     }
+
+    /**
+     * For every station on the set of station add the lines of that station to the lineList in the station
+     *
+     * @return
+     */
+    public Builder addLinesToStations() {
+        // TODO
+        for (Station s : stationSet
+             ) {
+            lineList.addAll(s.getLines());
+        }
+        return this;
+    }
+
+    /**
+     * Method that uses the list of Lines to build connections from the consecutive stations in the stationList of a line.
+     *
+     * @return
+     */
+    public Builder buildConnections() {
+        // TODO
+        for (Line l : lineList
+             ) {
+            for (int i = 0; i < l.getStationsOnLine().size(); i++) {
+                if (i == l.getStationsOnLine().size() - 1){
+                    break;
+                }
+                connectionSet.add(new Connection(l.getStationsOnLine().get(i), l.getStationsOnLine().get(i + 1)));
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Method that builds the graph.
+     * All stations of the stationSet are addes as vertices to the graph.
+     * All connections of the connectionSet are addes as edges to the graph.
+     *
+     * @return
+     */
+    public TransportGraph build() {
+        TransportGraph graph = new TransportGraph(stationSet.size());
+        // TODO
+        return graph;
+    }
+
+}
 }
