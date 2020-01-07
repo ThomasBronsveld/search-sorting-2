@@ -87,7 +87,7 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * @param i an index
      * @param key the key to associate with index i
      * @throws IndexOutOfBoundsException unless 0 &le; i < NMAX
-     * @throws java.util.IllegalArgumentException if there already is an item associated with index i
+     * throws java.util.IllegalArgumentException if there already is an item associated with index i
      */
     public void insert(int i, Key key) {
         if (i < 0 || i >= NMAX) throw new IndexOutOfBoundsException();

@@ -29,7 +29,6 @@ public class TransportGraph {
     public void addVertex(Station vertex) {
         // TODO
         stationList.add(vertex);
-//        System.out.println(stationList.size());
         stationIndices.put(vertex.getStationName(), stationList.size());
     }
 
@@ -50,9 +49,6 @@ public class TransportGraph {
         * station G heeft als Adjecencies: {[F, J], [A, D]}
          */
         Station fromStation = stationList.get(from);
-        Station prevStation;
-        Station nextStation;
-        int prevLocation;
         ArrayList<Integer> list = new ArrayList<Integer>();
         for(Line l : fromStation.getLines()) {
             for (int i = 0; i < l.getStationsOnLine().size(); i++) {
@@ -63,7 +59,7 @@ public class TransportGraph {
 
             }
             adjacencyLists[from] = list;
-
+            System.out.println("Dichtbijgelegen stations/adj: " + list);
 
             // TODO
             numberOfConnections++;
@@ -129,7 +125,7 @@ public class TransportGraph {
             for (int indexAdjacent = 0; indexAdjacent < loopsize; indexAdjacent++) {
                 resultString.append(stationList.get(adjacencyLists[indexVertex].get(indexAdjacent)).getStationName() + "-");
             }
-            resultString.append(stationList.get(adjacencyLists[indexVertex].get(loopsize)).getStationName() + "\n");
+            //resultString.append(stationList.get(adjacencyLists[indexVertex].get(loopsize)).getStationName() + "\n");
         }
         return resultString.toString();
     }
@@ -160,9 +156,15 @@ public class TransportGraph {
          */
         public Builder addLine(String[] lineDefinition) {
             Line newLine = new Line(lineDefinition[0], lineDefinition[1]);
-            for (Station station : stationSet) {
-                newLine.addStation(station);
+
+            //Lees alles achter de naam en type van de Line uit (dus stations) en voeg deze toe het lineObject
+            for(int i = 2; i < lineDefinition.length; i++){
+                Station station;
+                newLine.addStation(station = new Station(lineDefinition[i]));
+                station.addLine(newLine);
+
             }
+            lineList.add(newLine);
             return this;
         }
 
@@ -175,12 +177,16 @@ public class TransportGraph {
      */
     public Builder buildStationSet() {
         // TODO
-        for (Line l : lineList
-             ) {
+        for (Line l : lineList) {
+            //Atm zijn er geen stations op de line
             for (Station s : l.getStationsOnLine()
                  ) {
+                //Volgensmij kan die if weg, omdat in Set sws altijd maar 1 keer bijvoorbeeld 'A' kan voorkomenw
+                System.out.println("Heeel veel stations hier");
+                System.out.println(s.getStationName());
                 if(!stationSet.contains(s)){
                     stationSet.add(s);
+
                 }
             }
         }
@@ -194,8 +200,11 @@ public class TransportGraph {
      */
     public Builder addLinesToStations() {
         // TODO
-        for (Station s : stationSet
-             ) {
+        for (Station s : stationSet) {
+            for(Line line : s.getLines()){
+                s.addLine(line);
+                System.out.println("Ik kom hier lettterlijk nooit");
+            }
             lineList.addAll(s.getLines());
         }
         return this;
@@ -208,8 +217,7 @@ public class TransportGraph {
      */
     public Builder buildConnections() {
         // TODO
-        for (Line l : lineList
-             ) {
+        for (Line l : lineList) {
             for (int i = 0; i < l.getStationsOnLine().size(); i++) {
                 if (i == l.getStationsOnLine().size() - 1){
                     break;
@@ -217,6 +225,7 @@ public class TransportGraph {
                 connectionSet.add(new Connection(l.getStationsOnLine().get(i), l.getStationsOnLine().get(i + 1)));
             }
         }
+        System.out.println(connectionSet);
         return this;
     }
 
@@ -229,6 +238,13 @@ public class TransportGraph {
      */
     public TransportGraph build() {
         TransportGraph graph = new TransportGraph(stationSet.size());
+        for(Station s : stationSet){
+            graph.addVertex(s);
+        }
+        for(Connection c : connectionSet){
+            graph.addEdge(c);
+        }
+
         // TODO
         return graph;
     }
