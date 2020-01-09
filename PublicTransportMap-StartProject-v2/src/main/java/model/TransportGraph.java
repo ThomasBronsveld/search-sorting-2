@@ -43,36 +43,89 @@ public class TransportGraph {
      * @param to
      */
     private void addEdge(int from, int to) {
+        //Pak het station uit de stationlist adhv integer from
+        Station fromStation = stationList.get(from);
+        Station toStation = stationList.get(to);
+
+
+        //Maak list aan die later connectie[][] wordt
+        ArrayList<Integer> listFrom = new ArrayList<>();
+        ArrayList<Integer> listTo = new ArrayList<>();
+        //Loop door alle lines heen van het station
+        for(Line l : fromStation.getLines()) {
+            //Loop door alle stations heen op de Line
+            for (int i = 0; i < l.getStationsOnLine().size(); i++) {
+                //Controleer of station niet gelijk is aan 'fromstation'
+                if (fromStation.equals(l.getStationsOnLine().get(i))) {
+                    if (i > 0) {
+                        listFrom.add(stationList.indexOf(l.getStationsOnLine().get(i - 1)));
+                    }
+                    if (i < l.getStationsOnLine().size() - 1) {
+                        listFrom.add(stationList.indexOf(l.getStationsOnLine().get(i + 1)));
+                    }
+                }
+            }
+        }
+        for(Line l : toStation.getLines()) {
+            //Loop door alle stations heen op de Line
+            for (int i = 0; i < l.getStationsOnLine().size(); i++) {
+                //Controleer of station niet gelijk is aan 'fromstation'
+                if (toStation.equals(l.getStationsOnLine().get(i))) {
+                    if (i > 0) {
+                        listTo.add(stationList.indexOf(l.getStationsOnLine().get(i - 1)));
+                    }
+                    if (i < l.getStationsOnLine().size() - 1) {
+                        listTo.add(stationList.indexOf(l.getStationsOnLine().get(i + 1)));
+                    }
+                }
+            }
+        }
+            adjacencyLists[from] = listFrom;
+            adjacencyLists[to] = listTo;
+//
+//            // TODO
+            numberOfConnections++;
+            //from 6 to = 9
+            Connection c = new Connection(stationList.get(from), stationList.get(to));
+            connections[from][to] = c; //zet Connection object neer.
+        }
+//         List<Integer>[] list2 = adjacencyLists;
+//         Map<String, Integer> stationIndices2 = stationIndices;
+
         //We willen een List van een integer array([station linkerkant, station rechterkant) terugkrijgen.
         /*
         * Strikt van het voorbeeld genomen met gekleurde lijnen:
         * station B heeft als Adjecencies: {[E, F], [A, C]}
         * station G heeft als Adjecencies: {[F, J], [A, D]}
          */
-        Station fromStation = stationList.get(from);
-        Station prevStation;
-        Station nextStation;
-        int prevLocation;
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        for(Line l : fromStation.getLines()) {
-            for (int i = 0; i < l.getStationsOnLine().size(); i++) {
-                if (l.getStationsOnLine().get(i).equals(fromStation)) {
-                    list.add(stationList.indexOf(l.getStationsOnLine().get(i - 1)));
-                    list.add(stationList.indexOf(l.getStationsOnLine().get(i + 1)));
-                }
+//        Station fromStation = stationList.get(from);
+//        ArrayList<Integer> list = new ArrayList<Integer>();
+//        for(Line l : fromStation.getLines()) {
+//            for (int i = 0; i < l.getStationsOnLine().size(); i++) {
+//                if (l.getStationsOnLine().get(i).equals(fromStation)) {
+//                    if(i>0){
+//                        list.add(stationList.indexOf(l.getStationsOnLine().get(i - 1)));
+////                    }
+//                    if(i<stationList.size()-2){
+//                        int x = stationList.indexOf(l.getStationsOnLine().get(i+1));
+//                        //Index: 2
+//                       // list.add(stationList.indexOf(l.getStationsOnLine().get(i + 1)));
+//                        list.add(x);
+//                    }
+//                }
+//
+//            }
+//            adjacencyLists[from] = list;
+//
+//
+//            // TODO
+//            numberOfConnections++;
+//            //from 6 to = 9
+//            Connection c = new Connection(stationList.get(from), stationList.get(to));
+//            connections[from][to] = c; //zet Connection object neer.
+//        }
 
-            }
-            adjacencyLists[from] = list;
 
-
-            // TODO
-            numberOfConnections++;
-            //from 6 to = 9
-            Connection c = new Connection(stationList.get(from), stationList.get(to));
-            connections[from][to] = c; //zet Connection object neer.
-        }
-
-    }
 
 
     /**
@@ -129,6 +182,8 @@ public class TransportGraph {
             for (int indexAdjacent = 0; indexAdjacent < loopsize; indexAdjacent++) {
                 resultString.append(stationList.get(adjacencyLists[indexVertex].get(indexAdjacent)).getStationName() + "-");
             }
+            int x = adjacencyLists[indexVertex].get(loopsize);
+            //current problem: adjencyLists[indexVertex].size() = 0
             resultString.append(stationList.get(adjacencyLists[indexVertex].get(loopsize)).getStationName() + "\n");
         }
         return resultString.toString();
@@ -160,8 +215,14 @@ public class TransportGraph {
          */
         public Builder addLine(String[] lineDefinition) {
             Line newLine = new Line(lineDefinition[0], lineDefinition[1]);
-            for (Station station : stationSet) {
-                newLine.addStation(station);
+            //Add Line to list of lines
+            lineList.add(newLine);
+            //Begin bij 2 omdat vanaf deze plek de station namen komen in de line definition
+            for(int i = 2; i<lineDefinition.length; i++){
+                Station s = new Station(lineDefinition[i]);
+                //Voeg station toe aan de Line
+                newLine.addStation(s);
+
             }
             return this;
         }
@@ -170,6 +231,7 @@ public class TransportGraph {
     /**
      * Method that reads all the lines and their stations to build a set of stations.
      * Stations that are on more than one line will only appear once in the set.
+     * DANKZIJ DEZE METHODE WORDT DE STATIONSET GEVULD
      *
      * @return
      */
@@ -177,10 +239,16 @@ public class TransportGraph {
         // TODO
         for (Line l : lineList
              ) {
+            //De Lines hebben nu wel stations op de line
             for (Station s : l.getStationsOnLine()
                  ) {
+                //Die if statement maakt in principe niet uit omdat het om een Set gaat
                 if(!stationSet.contains(s)){
+                    //Voeg alle stations van line toe aan de stationSet.
                     stationSet.add(s);
+                    //Voeg line toe aan station
+                    //Dit moet eigenlijk gebeuren in de methode addLinesToStations maar dit is echt 1000keer makkelijker
+                     s.addLine(l);
                 }
             }
         }
@@ -189,14 +257,23 @@ public class TransportGraph {
 
     /**
      * For every station on the set of station add the lines of that station to the lineList in the station
-     *
+     *  Waardeloze methode omdat dit ook in de methode buildStationsOnSet kan met 1 regel s.addLine(l)
      * @return
      */
     public Builder addLinesToStations() {
         // TODO
         for (Station s : stationSet
              ) {
-            lineList.addAll(s.getLines());
+            //get the lines of that station DE STATIONS HEBBEN NOG GEEN LINES
+            for(Line line: s.getLines()){
+                //voeg lijn toe aan LINELIST(SET) IN STATION (CLASS)
+                //Vraag me af of er nog iets moet gebeuren met StationList in de builder class
+                //s.addLine(line);
+
+
+            }
+
+
         }
         return this;
     }
@@ -208,14 +285,37 @@ public class TransportGraph {
      */
     public Builder buildConnections() {
         // TODO
+        //List of lines
+        Station s;
+        Station s2;
         for (Line l : lineList
              ) {
+            //Loop door alle stations op de line
             for (int i = 0; i < l.getStationsOnLine().size(); i++) {
-                if (i == l.getStationsOnLine().size() - 1){
-                    break;
+
+                if (i +1 <= l.getStationsOnLine().size()) {
+                    //build connections
+                     s = l.getStationsOnLine().get(i);
+                     //size: 5 i:4   i+1:5 = niet leuk   i mag alleen maar 3 zijn
+                    if(i < l.getStationsOnLine().size()-1) {
+                        s2 = l.getStationsOnLine().get(i + 1);
+                    }else{
+                        s2 = s;
+                    }
+                    Connection connection = new Connection(s, s2);
+                    connectionSet.add(connection);
+                    i++;
                 }
-                connectionSet.add(new Connection(l.getStationsOnLine().get(i), l.getStationsOnLine().get(i + 1)));
             }
+
+
+//            for (int i = 0; i < l.getStationsOnLine().size(); i++) {
+//                if (i == l.getStationsOnLine().size() - 1){
+//                    break;
+//                }
+//                connectionSet.add(new Connection(l.getStationsOnLine().get(i), l.getStationsOnLine().get(i + 1)));
+//            }
+//        }
         }
         return this;
     }
@@ -224,12 +324,20 @@ public class TransportGraph {
      * Method that builds the graph.
      * All stations of the stationSet are addes as vertices to the graph.
      * All connections of the connectionSet are addes as edges to the graph.
-     *q
+     *
      * @return
      */
     public TransportGraph build() {
         TransportGraph graph = new TransportGraph(stationSet.size());
+        for(Station s : stationSet){
+            graph.addVertex(s);
+        }
+        for(Connection c : connectionSet){
+            graph.addEdge(c);
+        }
+
         // TODO
+        System.out.println("Transportgraph Build method");
         return graph;
     }
 
