@@ -5,9 +5,8 @@ import java.util.Set;
 
 public class Station {
 
-    //Was private maar boeie
-    public String stationName;
-    public Set<Line> lines;
+    private String stationName;
+    private Set<Line> lines;
 
     public Station(String nodeName) {
         this.stationName = nodeName;
