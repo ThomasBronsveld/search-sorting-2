@@ -233,7 +233,7 @@ public class TransportGraph {
      * Method that builds the graph.
      * All stations of the stationSet are addes as vertices to the graph.
      * All connections of the connectionSet are addes as edges to the graph.
-     *
+     *q
      * @return
      */
     public TransportGraph build() {
