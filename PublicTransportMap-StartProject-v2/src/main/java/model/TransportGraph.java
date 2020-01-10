@@ -30,7 +30,7 @@ public class TransportGraph {
         // TODO
         stationList.add(vertex);
 //        System.out.println(stationList.size());
-        stationIndices.put(vertex.getStationName(), stationList.size());
+        stationIndices.put(vertex.getStationName(), stationList.indexOf(vertex));
     }
 
 
@@ -43,9 +43,11 @@ public class TransportGraph {
      * @param to
      */
     private void addEdge(int from, int to) {
-
+        //add one to the numberofconnections variable
+        numberOfConnections+=1;
         adjacencyLists[from].add(to);
         adjacencyLists[to].add(from);
+
     }
 
 //
@@ -67,8 +69,14 @@ public class TransportGraph {
      * @param connection The edge as a connection between stations
      */
     public void addEdge(Connection connection) {
-        // TODO
-        //Allebei de richtingen
+//        int from = this.stationIndices.get(connection.getFrom().getStationName());
+//        int to = this.stationIndices.get(connection.getTo().getStationName());
+//
+//        connections[from][to] = connection;
+//        connections[to][from] = connection;
+//        addEdge(from, to);
+////        // TODO
+//        //Allebei de richtingen
 
         this.addEdge(stationList.indexOf(connection.getFrom()), stationList.indexOf(connection.getTo()));
     }

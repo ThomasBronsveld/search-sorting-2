@@ -1,5 +1,7 @@
 package graphalgorithms;
 
+import javafx.geometry.VerticalDirection;
+import model.Line;
 import model.Station;
 import model.TransportGraph;
 
@@ -30,6 +32,8 @@ public abstract class AbstractPathSearch {
         nodesVisited = new ArrayList<>();
         marked = new boolean[graph.getNumberOfStations()];
         edgeTo = new int[graph.getNumberOfStations()];
+        verticesInPath = new LinkedList<>();
+        nodesVisited = new LinkedList<>();
     }
 
     public abstract void search();
@@ -48,10 +52,39 @@ public abstract class AbstractPathSearch {
      * First the LinkedList verticesInPath, containing the indexes of the stations, should be build, used as a stack
      * Then the list nodesInPath containing the actual stations is build.
      * Also the number of transfers is counted.
+     *
      * @param vertex The station (vertex) as an index
      */
     public void pathTo(int vertex) {
         // TODO
+//        if (hasPathTo(vertex)) return;
+//
+//        for (int v = vertex; v != startIndex; v = edgeTo[v]) {
+//            verticesInPath.push(v);
+//        }
+//
+//        verticesInPath.addFirst(startIndex);
+//
+//        for (Integer v : verticesInPath) {
+//            nodesInPath.add(graph.getStation(v));
+//        }
+//
+//        countTransfers();
+        if (!hasPathTo(vertex)) {
+            for (int i = vertex; i != startIndex; i = edgeTo[i]) {
+                verticesInPath.push(i);
+            }
+            verticesInPath.addFirst(startIndex);
+
+            for (Integer v : verticesInPath) {
+                nodesInPath.add(graph.getStation(v));
+            }
+            countTransfers();
+        }else{
+            return;
+        }
+
+
     }
 
     /**
@@ -60,7 +93,33 @@ public abstract class AbstractPathSearch {
      * If to consecutive connections are on different lines there was a transfer.
      */
     public void countTransfers() {
-        // TODO
+//        // TODO
+//        if (verticesInPath.size() <= 1) {
+//            return;
+//        }
+//
+//        Line currentLine = graph.getStation(endIndex).getCommonLine(graph.getStation(edgeTo[endIndex]));
+//        for (int v = endIndex; v != startIndex; v = edgeTo[v]) {
+//            if (!currentLine.getStationsOnLine().contains(graph.getStation(edgeTo[v]))) {
+//                currentLine = graph.getStation(v).getCommonLine(graph.getStation(edgeTo[v]));
+//                transfers++;
+//            }
+//        }
+
+//        Check if there are transfers
+        boolean hasTransfers = verticesInPath.size() > 1;
+        //there are no transfers,  break function
+        if (!hasTransfers) return;
+        //Get station from graph with endindex
+        Station s = graph.getStation(endIndex);
+        //Get the commonline in the graph
+        Line commonLine = s.getCommonLine(graph.getStation(edgeTo[endIndex]));
+        for (int i = endIndex; i < startIndex; i = edgeTo[i]) {
+            if (!commonLine.getStationsOnLine().contains(graph.getStation(edgeTo[i]))) {
+                commonLine = graph.getStation(i).getCommonLine(graph.getStation(edgeTo[i]));
+                transfers += 1;
+            }
+        }
     }
 
 
