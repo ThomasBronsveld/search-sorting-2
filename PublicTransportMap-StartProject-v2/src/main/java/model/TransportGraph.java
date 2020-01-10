@@ -44,88 +44,10 @@ public class TransportGraph {
      */
     private void addEdge(int from, int to) {
 
-        //Pak het station uit de stationlist adhv integer from
-        Station fromStation = stationList.get(from);
-
-        Station toStation = stationList.get(to);
-
-
-        //Maak list aan die later connectie[][] wordt
-        ArrayList<Integer> listFrom = new ArrayList<>();
-        ArrayList<Integer> listTo = new ArrayList<>();
-
-        //Loop door alle lines heen van het station
-        for (Line l : fromStation.getLines()) {
-            //Loop door alle stations heen op de Line
-            for (int i = 0; i < l.getStationsOnLine().size(); i++) {
-                //Controleer of station niet gelijk is aan 'fromstation'
-                if (fromStation.equals(l.getStationsOnLine().get(i))) {
-                    if (i > 0) {
-                        listFrom.add(stationList.indexOf(l.getStationsOnLine().get(i - 1)));
-                    }
-                    if (i < l.getStationsOnLine().size() - 1) {
-                        listFrom.add(stationList.indexOf(l.getStationsOnLine().get(i + 1)));
-                    }
-                }
-            }
-        }
-//        System.out.println(listFrom.toString());
-
-//        A: B-E-G B: A-C-E-F C: B-D-G-I D: C-G-H E: A-B-H F: B-G G: A-C-D-F-J H: D-E-I I: C-H J: G
-        for (Line l : toStation.getLines()) {
-            //Loop door alle stations heen op de Line
-            for (int i = 0; i < l.getStationsOnLine().size(); i++) {
-                //Controleer of station niet gelijk is aan 'fromstation'
-                if (toStation.equals(l.getStationsOnLine().get(i))) {
-                    if (i > 0) {
-                        listTo.add(stationList.indexOf(l.getStationsOnLine().get(i - 1)));
-                    }
-                    if (i < l.getStationsOnLine().size() - 1) {
-                        listTo.add(stationList.indexOf(l.getStationsOnLine().get(i + 1)));
-                    }
-                }
-            }
-        }
-
-
-        adjacencyLists[from] = listFrom;
-        System.out.println(listFrom.toString());
-        adjacencyLists[to] = listTo;
-        numberOfConnections++;
-        //from 6 to = 9
-        Connection c = new Connection(stationList.get(from), stationList.get(to));
-        Connection c2 = new Connection(stationList.get(to), stationList.get(from));
-        connections[from][to] = c; //zet Connection object neer.
-//        System.out.println(listTo);
-        connections[to][from] = c2;
+        adjacencyLists[from].add(to);
+        adjacencyLists[to].add(from);
     }
-//         List<Integer>[] list2 = adjacencyLists;
-//         Map<String, Integer> stationIndices2 = stationIndices;
 
-    //We willen een List van een integer array([station linkerkant, station rechterkant) terugkrijgen.
-    /*
-     * Strikt van het voorbeeld genomen met gekleurde lijnen:
-     * station B heeft als Adjecencies: {[E, F], [A, C]}
-     * station G heeft als Adjecencies: {[F, J], [A, D]}
-     */
-//        Station fromStation = stationList.get(from);
-//        ArrayList<Integer> list = new ArrayList<Integer>();
-//        for(Line l : fromStation.getLines()) {
-//            for (int i = 0; i < l.getStationsOnLine().size(); i++) {
-//                if (l.getStationsOnLine().get(i).equals(fromStation)) {
-//                    if(i>0){
-//                        list.add(stationList.indexOf(l.getStationsOnLine().get(i - 1)));
-////                    }
-//                    if(i<stationList.size()-2){
-//                        int x = stationList.indexOf(l.getStationsOnLine().get(i+1));
-//                        //Index: 2
-//                       // list.add(stationList.indexOf(l.getStationsOnLine().get(i + 1)));
-//                        list.add(x);
-//                    }
-//                }
-//
-//            }
-//            adjacencyLists[from] = list;
 //
 //
 //            // TODO
@@ -147,9 +69,7 @@ public class TransportGraph {
     public void addEdge(Connection connection) {
         // TODO
         //Allebei de richtingen
-        System.out.println(connection.getFrom().getStationName());
-        System.out.println(connection.getTo().getStationName());
-        System.out.println("random ertussen");
+
         this.addEdge(stationList.indexOf(connection.getFrom()), stationList.indexOf(connection.getTo()));
     }
 
