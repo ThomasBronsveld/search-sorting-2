@@ -56,20 +56,7 @@ public abstract class AbstractPathSearch {
      * @param vertex The station (vertex) as an index
      */
     public void pathTo(int vertex) {
-        // TODO
-//        if (hasPathTo(vertex)) return;
-//
-//        for (int v = vertex; v != startIndex; v = edgeTo[v]) {
-//            verticesInPath.push(v);
-//        }
-//
-//        verticesInPath.addFirst(startIndex);
-//
-//        for (Integer v : verticesInPath) {
-//            nodesInPath.add(graph.getStation(v));
-//        }
-//
-//        countTransfers();
+        countTransfers();
         if (!hasPathTo(vertex)) {
             for (int i = vertex; i != startIndex; i = edgeTo[i]) {
                 verticesInPath.push(i);
@@ -94,19 +81,8 @@ public abstract class AbstractPathSearch {
      */
     public void countTransfers() {
 //        // TODO
-//        if (verticesInPath.size() <= 1) {
-//            return;
-//        }
-//
-//        Line currentLine = graph.getStation(endIndex).getCommonLine(graph.getStation(edgeTo[endIndex]));
-//        for (int v = endIndex; v != startIndex; v = edgeTo[v]) {
-//            if (!currentLine.getStationsOnLine().contains(graph.getStation(edgeTo[v]))) {
-//                currentLine = graph.getStation(v).getCommonLine(graph.getStation(edgeTo[v]));
-//                transfers++;
-//            }
-//        }
 
-//        Check if there are transfers
+//      Check if there are transfers
         boolean hasTransfers = verticesInPath.size() > 1;
         //there are no transfers,  break function
         if (!hasTransfers) return;
