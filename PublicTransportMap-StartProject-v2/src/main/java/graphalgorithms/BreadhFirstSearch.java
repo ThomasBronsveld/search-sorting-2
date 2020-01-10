@@ -13,10 +13,10 @@ public class BreadhFirstSearch extends AbstractPathSearch{
     }
 
 
-    //Source Sedgeick book p. 520
+    //Zo een beetje letterlijk uit boek overgenomen
+    //Sedgewick p.520
     @Override
     public void search() {
-        //CHeck ff of dit in de volgorde van sedgewick nog altijd werkt
         //Zo ook nog even commentaar erbij zetten.
         Queue<Integer> queue = new LinkedList<Integer>();
         int s = startIndex;
@@ -28,7 +28,6 @@ public class BreadhFirstSearch extends AbstractPathSearch{
 
         while (!queue.isEmpty()) {
             int v = queue.remove();
-
             for (int w : graph.getAdjacentVertices(v)) {
                 Station station = graph.getStation(w);
                 if (!nodesVisited.contains(station)) {
@@ -39,8 +38,6 @@ public class BreadhFirstSearch extends AbstractPathSearch{
                 }
             }
         }
-        //Why this?
-        //Endindex is 1 te hoog
         pathTo(endIndex);
     }
 

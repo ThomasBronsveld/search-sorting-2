@@ -41,8 +41,9 @@ public abstract class AbstractPathSearch {
     /**
      * @param vertex Determines whether a path exists to the station as an index from the start station
      * @return
-     */
+     */ 
     public boolean hasPathTo(int vertex) {
+        //For some reason every marked value is true...
         return marked[vertex];
     }
 
@@ -56,7 +57,6 @@ public abstract class AbstractPathSearch {
      * @param vertex The station (vertex) as an index
      */
     public void pathTo(int vertex) {
-        countTransfers();
         if (!hasPathTo(vertex)) {
             for (int i = vertex; i != startIndex; i = edgeTo[i]) {
                 verticesInPath.push(i);

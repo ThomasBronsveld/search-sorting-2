@@ -69,16 +69,12 @@ public class TransportGraph {
      * @param connection The edge as a connection between stations
      */
     public void addEdge(Connection connection) {
-//        int from = this.stationIndices.get(connection.getFrom().getStationName());
-//        int to = this.stationIndices.get(connection.getTo().getStationName());
-//
-//        connections[from][to] = connection;
-//        connections[to][from] = connection;
-//        addEdge(from, to);
-////        // TODO
-//        //Allebei de richtingen
-
+        // TODO
         this.addEdge(stationList.indexOf(connection.getFrom()), stationList.indexOf(connection.getTo()));
+        int from = this.stationIndices.get(connection.getFrom().getStationName());
+        int to = this.stationIndices.get(connection.getTo().getStationName());
+        connections[to][from] = connection;
+        connections[from][to] = connection;
     }
 
     public List<Integer> getAdjacentVertices(int index) {
@@ -120,8 +116,9 @@ public class TransportGraph {
                 resultString.append(stationList.get(adjacencyLists[indexVertex].get(indexAdjacent)).getStationName() + "-");
             }
             int x = adjacencyLists[indexVertex].get(loopsize);
-            //current problem: adjencyLists[indexVertex].size() = 0
+
             resultString.append(stationList.get(adjacencyLists[indexVertex].get(loopsize)).getStationName() + "\n");
+
         }
         return resultString.toString();
     }
