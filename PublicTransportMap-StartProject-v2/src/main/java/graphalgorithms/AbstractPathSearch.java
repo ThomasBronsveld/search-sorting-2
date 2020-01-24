@@ -1,13 +1,16 @@
 package graphalgorithms;
 
 import javafx.geometry.VerticalDirection;
+import model.Connection;
 import model.Line;
 import model.Station;
 import model.TransportGraph;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import model.TransportGraph;
 
 /**
  * Abstract class that contains methods and attributes shared by the DepthFirstPath en BreadthFirstPath classes
@@ -34,6 +37,7 @@ public abstract class AbstractPathSearch {
         edgeTo = new int[graph.getNumberOfStations()];
         verticesInPath = new LinkedList<>();
         nodesVisited = new LinkedList<>();
+        nodesInPath = new ArrayList<>();
     }
 
     public abstract void search();
@@ -41,7 +45,7 @@ public abstract class AbstractPathSearch {
     /**
      * @param vertex Determines whether a path exists to the station as an index from the start station
      * @return
-     */ 
+     */
     public boolean hasPathTo(int vertex) {
         //For some reason every marked value is true...
         return marked[vertex];
@@ -57,22 +61,23 @@ public abstract class AbstractPathSearch {
      * @param vertex The station (vertex) as an index
      */
     public void pathTo(int vertex) {
-        if (!hasPathTo(vertex)) {
-            for (int i = vertex; i != startIndex; i = edgeTo[i]) {
-                verticesInPath.push(i);
+        if (hasPathTo(vertex)) {
+            for (int i = vertex; i != -1; i = edgeTo[i]) {
+                verticesInPath.addFirst(i);
             }
-            verticesInPath.addFirst(startIndex);
+
 
             for (Integer v : verticesInPath) {
                 nodesInPath.add(graph.getStation(v));
             }
             countTransfers();
-        }else{
+        } else {
             return;
         }
-
-
     }
+
+
+
 
     /**
      * Method to count the number of transfers in a path of vertices.
@@ -81,34 +86,39 @@ public abstract class AbstractPathSearch {
      */
     public void countTransfers() {
 //        // TODO
+        //Pak het path
+        ArrayList<Integer> stationsInPath = new ArrayList<>();
+        Line testLine = null;
+        String transportType = null;
+        System.out.println(verticesInPath.size());
+        for (int i = 0; i < verticesInPath.size() - 1; i++) {
+            Connection currentConnection = graph.getConnection(verticesInPath.get(i), verticesInPath.get(i + 1));
+            Line currLine = currentConnection.getLine();
+            String lineType = currLine.getType();
+            if (transportType == null) {
 
-//      Check if there are transfers
-        boolean hasTransfers = verticesInPath.size() > 1;
-        //there are no transfers,  break function
-        if (!hasTransfers) return;
-        //Get station from graph with endindex
-        Station s = graph.getStation(endIndex);
-        //Get the commonline in the graph
-        Line commonLine = s.getCommonLine(graph.getStation(edgeTo[endIndex]));
-        for (int i = endIndex; i < startIndex; i = edgeTo[i]) {
-            if (!commonLine.getStationsOnLine().contains(graph.getStation(edgeTo[i]))) {
-                commonLine = graph.getStation(i).getCommonLine(graph.getStation(edgeTo[i]));
-                transfers += 1;
+                transportType = lineType;
+            } else if (!transportType.equals(lineType)) {
+
+                transfers++;
+                transportType = lineType;
             }
+
         }
     }
 
+        /**
+         * Method to print all the nodes that are visited by the search algorithm implemented in one of the subclasses.
+         */
+        public void printNodesInVisitedOrder(){
+            System.out.print("Nodes in visited order: ");
+            for (Station vertex : nodesVisited) {
+                System.out.print(vertex.getStationName() + " ");
+            }
 
-    /**
-     * Method to print all the nodes that are visited by the search algorithm implemented in one of the subclasses.
-     */
-    public void printNodesInVisitedOrder() {
-        System.out.print("Nodes in visited order: ");
-        for (Station vertex : nodesVisited) {
-            System.out.print(vertex.getStationName() + " ");
+            System.out.println();
         }
-        System.out.println();
-    }
+
 
     @Override
     public String toString() {

@@ -48,14 +48,14 @@ public class TransportGraphLauncher {
         System.out.println(dfpTest);
         dfpTest.printNodesInVisitedOrder();
         System.out.println();
-//
+
         // BreadthFirstPath algorithm
         System.out.println("Result of BreadthFirstPath:");
         BreadhFirstSearch bfsTest = new BreadhFirstSearch(transportGraph, "E", "J");
         bfsTest.search();
         System.out.println(bfsTest);
         bfsTest.printNodesInVisitedOrder();
-
+//
         // A - 5
         System.out.println("\nOverview of all the paths from all stations to all other stations with the least connections:");
         System.out.println("-----------------------------------------------");
@@ -66,7 +66,7 @@ public class TransportGraphLauncher {
                     DepthFirstSearch dfp = new DepthFirstSearch(transportGraph, s.getStationName(), s2.getStationName());
                     dfp.search();
                     System.out.println("DepthFirstPath: " + dfp);
-
+//
                     BreadhFirstSearch bfp = new BreadhFirstSearch(transportGraph, s.getStationName(), s2.getStationName());
                     bfp.search();
                     System.out.println("BreadthFirstPath: " + bfp);
@@ -75,9 +75,9 @@ public class TransportGraphLauncher {
                 }
             }
         }
-
-
-       // Uncomment to test the builder:
+////
+////
+////       // Uncomment to test the builder:
         System.out.println(transportGraph);
 
 //

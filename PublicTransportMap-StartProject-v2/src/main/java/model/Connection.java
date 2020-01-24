@@ -13,6 +13,7 @@ public class Connection {
     public Connection(Station from, Station to) {
         this.from = from;
         this.to = to;
+
     }
 
     public Connection(Station from, Station to, double weight, Line line) {

@@ -229,7 +229,9 @@ public class TransportGraph {
                     s = l.getStationsOnLine().get(i);
                     s2 = l.getStationsOnLine().get(i + 1);
                     Connection connection = new Connection(s, s2);
+                    connection.setLine(l);
                     connectionSet.add(connection);
+
                 }
             }
             return this;

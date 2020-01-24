@@ -19,6 +19,9 @@ public class Line {
     public void addStation(Station station) {
         stationsOnLine.add(station);
     }
+    public String getType(){
+        return type;
+    }
 
     public List<Station> getStationsOnLine() {
         return stationsOnLine;

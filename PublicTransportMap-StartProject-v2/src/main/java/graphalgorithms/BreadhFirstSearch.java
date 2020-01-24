@@ -23,6 +23,8 @@ public class BreadhFirstSearch extends AbstractPathSearch{
 
         queue.add(s);
         //Mark the source
+        //marked[s] = true;
+        edgeTo[s] = -1;
         marked[s] = true;
         nodesVisited.add(graph.getStation(s));
 

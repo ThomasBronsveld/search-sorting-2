@@ -10,22 +10,25 @@ public class DepthFirstSearch extends AbstractPathSearch{
 
     @Override
     public void search() {
+        edgeTo[startIndex] = -1;
+        nodesVisited.add(graph.getStation(startIndex));
         depthFirstSearch(this.startIndex);
         pathTo(endIndex);
+
+
     }
 
     private void depthFirstSearch(int v) {
         if (marked[v]) return;
+        
 
         marked[v] = true;
+        for (int w : graph.getAdjacentVertices(v)) {
+            if (!marked[w]) {
+                nodesVisited.add(graph.getStation(w));
+                edgeTo[w] = v;
 
-        for (int a : graph.getAdjacentVertices(v)) {
-            if (!marked[a]) {
-                nodesVisited.add(graph.getStation(a));
-                edgeTo[a] = v;
-
-                // Recursive
-                depthFirstSearch(a);
+                depthFirstSearch(w);
             }
         }
     }
