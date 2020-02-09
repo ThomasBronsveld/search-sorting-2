@@ -219,10 +219,12 @@ public class TransportGraph {
          * @return
          */
         public Builder buildConnections() {
+            //[yellowWeights[], purpleWeights[]]
             // TODO
             //List of lines
             Station s;
             Station s2;
+
             for (Line l : lineList
             ) {
                 for (int i = 0; i < l.getStationsOnLine().size() - 1; i++) {
@@ -237,6 +239,21 @@ public class TransportGraph {
             return this;
         }
 
+        public Builder addWeightsToConnections(double[] weights, int lineNumber) {
+            Station s;
+            Station s2;
+
+            Line l = lineList.get(lineNumber);
+
+            for (int i = 0; i <l.getStationsOnLine().size() - 1; i++) {
+                s = l.getStationsOnLine().get(i);
+                s2 = l.getStationsOnLine().get(i + 1);
+                Connection connection = new Connection(s, s2, weights[i], l);
+                connection.setLine(l);
+                connectionSet.add(connection);
+            }
+            return this;
+        }
         /**
          * Method that builds the graph.
          * All stations of the stationSet are addes as vertices to the graph.
@@ -250,6 +267,7 @@ public class TransportGraph {
                 graph.addVertex(s);
             }
             for (Connection c : connectionSet) {
+
                 graph.addEdge(c);
             }
 

@@ -1,6 +1,6 @@
 package graphalgorithms;
 
-import javafx.geometry.VerticalDirection;
+
 import model.Connection;
 import model.Line;
 import model.Station;
