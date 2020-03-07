@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8a188c9f-fef6-4290-ba74-8afd566fa905" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PublicTransportMap.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PublicTransportMap.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/TransportGraphLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TransportGraphLauncher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/graphalgorithms/AbstractPathSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graphalgorithms/AbstractPathSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/graphalgorithms/BreadhFirstSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graphalgorithms/BreadhFirstSearch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/graphalgorithms/DepthFirstSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graphalgorithms/DepthFirstSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/IndexMinPQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/IndexMinPQ.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Line.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/TransportGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/TransportGraph.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -182,22 +173,22 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="580" y="184" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1578658754489" />
-    <state width="1069" height="196" key="GridCell.Tab.0.bottom" timestamp="1579875800042">
+    <state width="957" height="164" key="GridCell.Tab.0.bottom" timestamp="1581611583987">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1069" height="196" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1579875800042" />
-    <state width="1069" height="196" key="GridCell.Tab.0.center" timestamp="1579875800042">
+    <state width="957" height="164" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1581611583987" />
+    <state width="957" height="164" key="GridCell.Tab.0.center" timestamp="1581611583986">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1069" height="196" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1579875800042" />
-    <state width="1069" height="196" key="GridCell.Tab.0.left" timestamp="1579875800042">
+    <state width="957" height="164" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1581611583986" />
+    <state width="957" height="164" key="GridCell.Tab.0.left" timestamp="1581611583986">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1069" height="196" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1579875800042" />
-    <state width="1069" height="196" key="GridCell.Tab.0.right" timestamp="1579875800042">
+    <state width="957" height="164" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1581611583986" />
+    <state width="957" height="164" key="GridCell.Tab.0.right" timestamp="1581611583986">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1069" height="196" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1579875800042" />
+    <state width="957" height="164" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1581611583986" />
     <state width="1069" height="196" key="GridCell.Tab.1.bottom" timestamp="1579875800042">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -218,10 +209,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="280" y="4" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1578658850451" />
-    <state x="496" y="253" key="com.intellij.ide.util.TipDialog" timestamp="1579881272245">
+    <state x="496" y="253" key="com.intellij.ide.util.TipDialog" timestamp="1583589888573">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="496" y="253" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1579881272245" />
+    <state x="496" y="253" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1583589888573" />
     <state x="496" y="35" width="607" height="789" key="find.popup" timestamp="1578661311776">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -230,6 +221,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="183" y="50" key="new project wizard/0.0.1600.860@0.0.1600.860" timestamp="1578755674487" />
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1581254080297">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1581254080297" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

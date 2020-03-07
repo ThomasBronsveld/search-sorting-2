@@ -20,7 +20,7 @@ public class DepthFirstSearch extends AbstractPathSearch{
 
     private void depthFirstSearch(int v) {
         if (marked[v]) return;
-        
+
 
         marked[v] = true;
         for (int w : graph.getAdjacentVertices(v)) {

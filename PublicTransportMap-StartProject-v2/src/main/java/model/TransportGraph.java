@@ -238,6 +238,34 @@ public class TransportGraph {
         }
 
         /**
+         * Method that uses the list of Lines to build connections from the consecutive stations in the stationList of a line.
+         *
+         * @return
+         */
+        public Builder buildConnectionsDijkstra(double[] weightlist) {
+            // TODO
+            //List of lines
+            Station s;
+            Station s2;
+            for (Line l : lineList
+            ) {
+                for (int i = 0; i < l.getStationsOnLine().size() - 1; i++) {
+                    s = l.getStationsOnLine().get(i);
+                    s2 = l.getStationsOnLine().get(i + 1);
+                    //Check deze man neef
+                    Connection connection = new Connection(s, s2);
+                    if(i > 0){
+
+                    }
+                    connection.setLine(l);
+                    connectionSet.add(connection);
+
+                }
+            }
+            return this;
+        }
+
+        /**
          * Method that builds the graph.
          * All stations of the stationSet are addes as vertices to the graph.
          * All connections of the connectionSet are addes as edges to the graph.

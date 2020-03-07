@@ -17,8 +17,25 @@ public class TransportGraphLauncher {
         // TODO Use the builder to build the graph from the String array.
 
 
+        String[] yellowline2 = {"yellow", "Grote Sluis", "Ymeerdijk", "Haven", "Nobelplein", "Violetplantsoen", "Oostvaarderss", "Grote Sluis"};
+        String[] greenline2 = {"green", "Ymeerdijk", "Trojelaan", "Steigerplein", "Swingstraat", "Bachgracht", "Nobelplein", ""};
+        String[] redline2 = {"red", "Haven", "Marken", "Steigerplein", "Centrum", "Meridiaan", "Dukdalf", "Oostvaarders"};
+        String[] blueline2 = {"blue", "Trojelaan", "Coltrane Cirkel", "Meridiaan", "Robijnpark", "Violetplantsoen"};
+        String[] purpleline2 = {"purple", "Grote Sluis", "Grootzeil", "Coltrane Cirkel", "Centrum", "Swingstraat"};
+
+        double[] yellowLineWeights = {26.0, 19.0, 37.0, 25.0, 22.0, 28.0 };
+        double[] greenLineWeights = {5.0, 3.7, 6.9, 3.9, 3.4};
+        double[] redLineWeights = {4.5, 4.7, 6.1, 3.5, 5.4, 5.6};
+
         Builder builder = new Builder();
 
+        Builder builder2 = new Builder();
+
+        builder2.addLine(yellowline2);
+        builder2.addLine(greenline2);
+        builder2.addLine(redline2);
+        builder2.addLine(blueline2);
+        builder2.addLine(purpleline2);
         //Line is toegevoegd aan de lijst van lijnen.
         //Stations zijn toegevoegd aan de 'StationsOnLine' list van redLine.
         //GREENLINE GEEFT ERRROR omdat hij oneven is
@@ -28,12 +45,15 @@ public class TransportGraphLauncher {
         builder.addLine(greenLine);
         builder.addLine(yellowLine);
 
+        builder2.buildStationSet();
         //Build a Set of stations, voegt ook de Line toe aan de station
         builder.buildStationSet();
 
+        builder2.addLinesToStations();
         //Atm een waardeloze methode
         builder.addLinesToStations();
 //
+        builder.buildConnections();
         //Bouw connecties van opeenvolgende stations in een Line
         builder.buildConnections();
 
