@@ -1,9 +1,9 @@
 package graphalgorithms;
 
-import model.DirectedEdge;
-import model.Edge;
-import model.EdgeWeightedDigraph;
+import model.Connection;
 import model.IndexMinPQ;
+import model.Station;
+import model.TransportGraph;
 
 import java.util.Stack;
 
@@ -11,56 +11,69 @@ import java.util.Stack;
  * @Project $(PROJECT_NAME)
  * @Author Thomas Bronsveld <Thomas.Bronsveld@hva.nl>
  */
-public class DijkstraShortestPath {
-
-    private DirectedEdge[] edgeTo;
+public class DijkstraShortestPath extends AbstractPathSearch {
+    private double totalweight;
     private double[] distTo;
     private IndexMinPQ<Double> pq;
 
-    public DijkstraShortestPath(EdgeWeightedDigraph G, int s) {
-        pq = new IndexMinPQ<Double>(G.V());
+    public DijkstraShortestPath(TransportGraph graph, String start, String end) {
+        super(graph, start, end);
 
-        for (int v = 0; v < G.V(); v++) {
+        pq = new IndexMinPQ<Double>(graph.getNumberOfStations());
+        distTo = new double[graph.getNumberOfStations()];
+
+        for (int v = 0; v < graph.getNumberOfStations(); v++) {
             distTo[v] = Double.POSITIVE_INFINITY;
         }
-        distTo[s] = 0.0;
-
-        pq.insert(s, 0.0);
-
-        while(!pq.isEmpty()) {
-            relax(G, pq.delMin());
-        }
+        distTo[startIndex] = 0.0;
     }
 
-    private void relax(EdgeWeightedDigraph G, int v){
-        for(DirectedEdge e: G.adj(v)){
-            int w = e.to();
+    @Override
+    public void search() {
+        int s = startIndex;
+        edgeTo[s] = -1;
+        pq.insert(s, (double) 0);
 
-            if(distTo[w] > distTo[v] + e.weight()){
-                distTo[w] = distTo[v] + e.weight();
-                if(pq.contains(w)){
-                    pq.changeKey(w, distTo[w]);
-                } else {
-                    pq.insert(w,distTo[w]);
+        while (!pq.isEmpty() && s != endIndex){
+            s = pq.delMin();
+
+            if(s == endIndex) {
+                totalweight = distTo[s];
+            }
+
+            nodesVisited.add(graph.getStation(s));
+            for (Integer i : graph.getAdjacentVertices(s)) {
+                Connection connection = graph.getConnection(s, i);
+                if (distTo[i] > (distTo[s] + connection.getWeight())) {
+
+                    // Add the connection and weight
+                    distTo[i] = distTo[s] + connection.getWeight();
+
+                    // Change the edge to the vertex
+                    edgeTo[i] = s;
+                    //pq bevat marken en zijn gewicht.
+                    //Steigerplein.
+                    if (pq.contains(i)) {
+                        pq.decreaseKey(i, distTo[i]);
+                    } else {
+                        pq.insert(i, distTo[i]);
+                    }
                 }
             }
         }
+        pathTo(endIndex);
     }
 
-    public double distTo(int v) {
-        return 0.0;
+    @Override
+    public boolean hasPathTo(int vertex) {
+        return distTo[vertex] < Double.POSITIVE_INFINITY;
     }
 
-    public boolean hasPathTo(int v) {
-        return true;
-    }
+//    private double weightOfRoute() {
+//
+//    }
 
-    public Iterable<DirectedEdge> pathTo(int v){
-        if(!hasPathTo(v)) return null;
-        Stack<DirectedEdge> path = new Stack<DirectedEdge>();
-        for(DirectedEdge e = edgeTo[v]; e != null; e=edgeTo[e.from()]){
-            path.push(e);
-        }
-        return path;
+    public double getTotalWeight() {
+        return totalweight;
     }
 }

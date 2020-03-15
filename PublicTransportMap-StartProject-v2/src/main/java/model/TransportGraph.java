@@ -44,9 +44,9 @@ public class TransportGraph {
      */
     private void addEdge(int from, int to) {
         //add one to the numberofconnections variable
-        numberOfConnections+=1;
         adjacencyLists[from].add(to);
         adjacencyLists[to].add(from);
+        numberOfConnections++;
 
     }
 
@@ -160,6 +160,8 @@ public class TransportGraph {
             }
             return this;
         }
+
+
 
 
         /**
