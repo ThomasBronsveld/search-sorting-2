@@ -15,6 +15,12 @@
             <artifactId>stdlib</artifactId>
             <version>1.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.5.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 
@@ -23,7 +29,4 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
     </properties>
-
-
-
 </project>
