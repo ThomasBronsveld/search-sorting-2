@@ -42,5 +42,4 @@ public class BreadhFirstSearch extends AbstractPathSearch{
         }
         pathTo(endIndex);
     }
-
 }

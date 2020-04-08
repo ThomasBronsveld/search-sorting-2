@@ -14,20 +14,20 @@ public class DepthFirstSearch extends AbstractPathSearch{
         nodesVisited.add(graph.getStation(startIndex));
         depthFirstSearch(this.startIndex);
         pathTo(endIndex);
-
-
     }
 
     private void depthFirstSearch(int v) {
-        if (marked[v]) return;
-        
-
+        if (marked[v]) {
+            System.out.println("gemarked");
+            System.out.println(marked[v]);
+            return;
+        }
         marked[v] = true;
         for (int w : graph.getAdjacentVertices(v)) {
             if (!marked[w]) {
+
                 nodesVisited.add(graph.getStation(w));
                 edgeTo[w] = v;
-
                 depthFirstSearch(w);
             }
         }

@@ -6,11 +6,9 @@ import model.Line;
 import model.Station;
 import model.TransportGraph;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import model.TransportGraph;
 
 /**
  * Abstract class that contains methods and attributes shared by the DepthFirstPath en BreadthFirstPath classes
@@ -26,7 +24,7 @@ public abstract class AbstractPathSearch {
     protected TransportGraph graph;
     protected final int startIndex;
     protected final int endIndex;
-
+    protected Line[] edgeToType;
 
     public AbstractPathSearch(TransportGraph graph, String start, String end) {
         startIndex = graph.getIndexOfStationByName(start);
@@ -35,6 +33,7 @@ public abstract class AbstractPathSearch {
         nodesVisited = new ArrayList<>();
         marked = new boolean[graph.getNumberOfStations()];
         edgeTo = new int[graph.getNumberOfStations()];
+        edgeToType = new Line[graph.getNumberOfStations()];
         verticesInPath = new LinkedList<>();
         nodesVisited = new LinkedList<>();
         nodesInPath = new ArrayList<>();
@@ -90,11 +89,13 @@ public abstract class AbstractPathSearch {
         ArrayList<Integer> stationsInPath = new ArrayList<>();
         Line testLine = null;
         String transportType = null;
-        System.out.println(verticesInPath.size());
         for (int i = 0; i < verticesInPath.size() - 1; i++) {
             Connection currentConnection = graph.getConnection(verticesInPath.get(i), verticesInPath.get(i + 1));
+            System.out.println(currentConnection);
             Line currLine = currentConnection.getLine();
+            System.out.println(currLine);
             String lineType = currLine.getType();
+            System.out.println(lineType);
             if (transportType == null) {
 
                 transportType = lineType;
@@ -103,8 +104,8 @@ public abstract class AbstractPathSearch {
                 transfers++;
                 transportType = lineType;
             }
-
         }
+        System.out.println("test");
     }
 
         /**
@@ -127,4 +128,15 @@ public abstract class AbstractPathSearch {
         return resultString.toString();
     }
 
+    public List<Station> getNodesVisited() {
+        return nodesVisited;
+    }
+
+    public int getTransfers() {
+        return transfers;
+    }
+
+    public int[] getEdgeTo() {
+        return edgeTo;
+    }
 }

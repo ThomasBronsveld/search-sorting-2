@@ -105,10 +105,9 @@ public class TransportGraphLauncher {
 //
         System.out.println(transportGraph2.toString());
 
-//        depthAndBreadthFirstSearch(transportGraph2, "Trojelaan", "Violetplantsoen");
-
-        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(transportGraph2, "Marken", "Oostvaarders");
-        dijkstraShortestPath.search();
+        depthAndBreadthFirstSearch(transportGraph2, "Trojelaan", "Violetplantsoen");
+        DijkstraShortestPath dijkstra = new DijkstraShortestPath(transportGraph2, "Trojelaan", "Violetplantsoen");
+        dijkstra.search();
     }
 
     /**
