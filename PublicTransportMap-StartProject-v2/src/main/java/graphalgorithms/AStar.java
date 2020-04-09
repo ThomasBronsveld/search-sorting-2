@@ -37,12 +37,13 @@ public class AStar extends AbstractPathSearch {
             nodesVisited.add(graph.getStation(s));
 
             for (Integer i : graph.getAdjacentVertices(s)) {
-
+                System.out.println("BEN IN DE HOOOOOOOOOOOOOD");
                 Connection connection = graph.getConnection(s, i);
+                System.out.println("Connection: " + connection.toString());
                 edgeToType[i] = connection.getLine();
                 double penalty = getTransferPenalty(s, i);
-                System.out.println(connection.getWeight());
-                System.out.println(getTravelTime(i));
+                System.out.println("Connection weight: " + connection.getWeight());
+                System.out.println("Traveltime: " + getTravelTime(i));
                 connection.setWeight(connection.getWeight() + penalty);
 
                 double travelTime = getTravelTime(i);
@@ -73,7 +74,7 @@ public class AStar extends AbstractPathSearch {
 //     * @return
 //     */
     private double getTravelTime(int stationIndex) {
-        return graph.getStation(stationIndex).getLocation().travelTime(graph.getStation(endIndex).getLocation());
+        return Math.abs(graph.getStation(stationIndex).getLocation().travelTime(graph.getStation(endIndex).getLocation()));
     }
 
     /**

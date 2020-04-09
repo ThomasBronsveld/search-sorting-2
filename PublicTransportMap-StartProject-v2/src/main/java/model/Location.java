@@ -19,8 +19,11 @@ public class Location {
         return y;
     }
 
-    public double travelTime(Location location) {
-        return (Math.abs(getX() - location.getX()) + Math.abs(getY()) - location.getY()) * SQUARE_TRAVEL_TIME;
+    public double travelTime(Location location)
+    {
+        System.out.printf("from location: " + this.toString());
+        System.out.println("to location: " + location.toString());
+        return Math.abs(this.x - location.getX()) + Math.abs(this.y - location.getY()) * SQUARE_TRAVEL_TIME;
     }
 
     @Override
