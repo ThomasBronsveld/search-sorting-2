@@ -33,6 +33,7 @@ public class DijkstraShortestPath extends AbstractPathSearch {
         pq.insert(s, (double) 0);
 
         while (!pq.isEmpty() && s != endIndex){
+
             s = pq.delMin();
 
             if(s == endIndex) {
@@ -42,10 +43,8 @@ public class DijkstraShortestPath extends AbstractPathSearch {
             nodesVisited.add(graph.getStation(s));
             for (Integer i : graph.getAdjacentVertices(s)) {
                 Connection connection = graph.getConnection(s, i);
-
                 edgeToType[i] = connection.getLine();
                 double penalty = getTransferPenalty(s, i);
-
                 connection.setWeight(connection.getWeight() + penalty);
 
                 if (distTo[i] > (distTo[s] + connection.getWeight())) {

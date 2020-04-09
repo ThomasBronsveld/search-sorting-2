@@ -11,9 +11,9 @@ import model.TransportGraph.Builder;
 public class TransportGraphLauncher {
 
     public static void main(String[] args) {
-//        assignmentA();
+        assignmentA();
         assignmentB();
-//        assignmentC();
+
     }
 
     private static void depthAndBreadthFirstSearch(TransportGraph graph, String start, String end) {
@@ -63,7 +63,7 @@ public class TransportGraphLauncher {
     }
 
     /**
-     *
+     * Dijkstra en A-star opdracht
      */
     public static void assignmentB() {
         String[] yellowline2 = {"yellow", "bus","Grote Sluis", "Ymeerdijk", "Haven", "Nobelplein", "Violetplantsoen", "Oostvaarders", "Grote Sluis"};
@@ -97,8 +97,6 @@ public class TransportGraphLauncher {
         builder2.buildStationSet();
         //Atm een waardeloze methode
         builder2.addLinesToStations();
-//
-
 
         //Bouw connecties van opeenvolgende stations in een Line
         builder2.addWeightsToConnections(yellowLineWeights, 4);
@@ -114,8 +112,7 @@ public class TransportGraphLauncher {
         builder2.addCoordsToConnections(yellowCords, 4);
 
         TransportGraph transportGraph2 = builder2.build();
-//
-//        depthAndBreadthFirstSearch(transportGraph2, "Trojelaan", "Violetplantsoen");
+
         DijkstraShortestPath dijkstra = new DijkstraShortestPath(transportGraph2, "Trojelaan", "Grootzeil");
         dijkstra.search();
         System.out.println(dijkstra.getTotalWeight());

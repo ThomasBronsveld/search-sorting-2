@@ -55,7 +55,7 @@ public class DepthFirstSearchTest {
     public void transferTest2() {
         dfs = new DepthFirstSearch(transportGraph, "F", "J");
         dfs.search();
-        assertEquals(4, dfs.getTransfers());
+        assertEquals(2, dfs.getTransfers());
     }
 
     @Test

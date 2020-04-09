@@ -44,11 +44,11 @@ public class DijkstraTest {
         builder2.addLinesToStations();
 //
         //Bouw connecties van opeenvolgende stations in een Line
-//        builder2.addWeightsToConnections(yellowLineWeights, 4);
-//        builder2.addWeightsToConnections(greenLineWeights, 3);
-//        builder2.addWeightsToConnections(redLineWeights, 0);
-//        builder2.addWeightsToConnections(blueLineWeights, 1);
-//        builder2.addWeightsToConnections(purpleLineWeights, 2);
+        builder2.addWeightsToConnections(yellowLineWeights, 4);
+        builder2.addWeightsToConnections(greenLineWeights, 3);
+        builder2.addWeightsToConnections(redLineWeights, 0);
+        builder2.addWeightsToConnections(blueLineWeights, 1);
+        builder2.addWeightsToConnections(purpleLineWeights, 2);
 
         transportGraph = builder2.build();
 
@@ -80,5 +80,46 @@ public class DijkstraTest {
         } catch (NumberFormatException ex) {
             ex.getMessage();
         }
+    }
+
+    @Test
+    public void weightTest3() {
+        dijkstra = new DijkstraShortestPath(transportGraph, "Grootzeil", "Ymeerdijk");
+        dijkstra.search();
+        assertEquals(28.2, dijkstra.getTotalWeight());
+    }
+    @Test
+    public void penaltyTest1() {
+        dijkstra = new DijkstraShortestPath(transportGraph, "Trojelaan", "Grootzeil");
+        dijkstra.search();
+        DecimalFormat df = new DecimalFormat("0.0");
+        double dijkstraGewicht;
+        try {
+            dijkstraGewicht = Double.parseDouble(df.format(dijkstra.getTotalWeight()));
+            assertEquals(17.2, dijkstraGewicht);
+        } catch (NumberFormatException ex) {
+            ex.getMessage();
+        }
+    }
+
+    @Test
+    public void penaltyTest2() {
+        dijkstra = new DijkstraShortestPath(transportGraph, "Dukdalf", "Bachgracht");
+        dijkstra.search();
+        assertEquals(22.4, dijkstra.getTotalWeight());
+    }
+
+    @Test
+    public void transferTest1() {
+        dijkstra = new DijkstraShortestPath(transportGraph, "Dukdalf", "Bachgracht");
+        dijkstra.search();
+        assertEquals(2, dijkstra.getTransfers());
+    }
+
+    @Test
+    public void transferTest2() {
+        dijkstra = new DijkstraShortestPath(transportGraph, "Grootzeil", "Ymeerdijk");
+        dijkstra.search();
+        assertEquals(2, dijkstra.getTransfers());
     }
 }

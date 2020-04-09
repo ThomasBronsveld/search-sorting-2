@@ -64,8 +64,6 @@ public abstract class AbstractPathSearch {
             for (int i = vertex; i != -1; i = edgeTo[i]) {
                 verticesInPath.addFirst(i);
             }
-
-
             for (Integer v : verticesInPath) {
                 nodesInPath.add(graph.getStation(v));
             }
@@ -74,38 +72,56 @@ public abstract class AbstractPathSearch {
             return;
         }
     }
-
-
-
-
     /**
      * Method to count the number of transfers in a path of vertices.
      * Uses the line information of the connections between stations.
      * If to consecutive connections are on different lines there was a transfer.
      */
     public void countTransfers() {
-//        // TODO
-        //Pak het path
-        ArrayList<Integer> stationsInPath = new ArrayList<>();
-        Line testLine = null;
-        String transportType = null;
-        for (int i = 0; i < verticesInPath.size() - 1; i++) {
-            Connection currentConnection = graph.getConnection(verticesInPath.get(i), verticesInPath.get(i + 1));
-            System.out.println(currentConnection);
-            Line currLine = currentConnection.getLine();
-            System.out.println(currLine);
-            String lineType = currLine.getType();
-            System.out.println(lineType);
-            if (transportType == null) {
+        if (verticesInPath.size() <= 1) {
+            return;
+        }
 
-                transportType = lineType;
-            } else if (!transportType.equals(lineType)) {
-
+        Line currentLine = graph.getStation(endIndex).getCommonLine(graph.getStation(edgeTo[endIndex]));
+        for (int v = endIndex; v != startIndex; v = edgeTo[v]) {
+            if (!currentLine.getStationsOnLine().contains(graph.getStation(edgeTo[v]))) {
+                currentLine = graph.getStation(v).getCommonLine(graph.getStation(edgeTo[v]));
                 transfers++;
-                transportType = lineType;
             }
         }
     }
+
+    /**
+     * Method to count the number of transfers in a path of vertices.
+     * Uses the line information of the connections between stations.
+     * If to consecutive connections are on different lines there was a transfer.
+     */
+//    public void countTransfers() {
+////        // TODO
+//        //Pak het path
+//        ArrayList<Integer> stationsInPath = new ArrayList<>();
+//        Line testLine = null;
+//        String transportType = null;
+//
+//        for (int i = 0; i < verticesInPath.size() - 1; i++) {
+////            System.out.println(verticesInPath.get(i));
+////            System.out.println(graph.getStation(verticesInPath.get(i)).getStationName());
+//            Connection currentConnection = graph.getConnection(verticesInPath.get(i), verticesInPath.get(i + 1));
+//            System.out.println(currentConnection);
+//            Line currLine = currentConnection.getLine();
+//            System.out.println(currLine);
+//            String lineType = currLine.getType();
+//            System.out.println(lineType);
+//            if (transportType == null) {
+//
+//                transportType = lineType;
+//            } else if (!transportType.equals(lineType)) {
+//
+//                transfers++;
+//                transportType = lineType;
+//            }
+//        }
+//    }
 
         /**
          * Method to print all the nodes that are visited by the search algorithm implemented in one of the subclasses.
@@ -115,8 +131,6 @@ public abstract class AbstractPathSearch {
             for (Station vertex : nodesVisited) {
                 System.out.print(vertex.getStationName() + " ");
             }
-
-            System.out.println();
         }
 
 
@@ -138,8 +152,8 @@ public abstract class AbstractPathSearch {
     public int[] getEdgeTo() {
         return edgeTo;
     }
+
     public double getTransferPenalty(int from, int to) {
-        System.out.println("eyo penalty");
         double metroPenalty = 6.0;
         double busPenalty = 3.0;
         double noPenalty = 0.0;

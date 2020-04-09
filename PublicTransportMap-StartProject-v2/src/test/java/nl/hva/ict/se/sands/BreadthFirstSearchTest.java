@@ -53,9 +53,9 @@ public class BreadthFirstSearchTest {
 
     @Test
     public void transferTest2() {
-        breadhFirstSearchfs = new BreadhFirstSearch(transportGraph, "F", "J");
+        breadhFirstSearchfs = new BreadhFirstSearch(transportGraph, "I", "F");
         breadhFirstSearchfs.search();
-        assertEquals(1, breadhFirstSearchfs.getTransfers());
+        assertEquals(4, breadhFirstSearchfs.getTransfers());
     }
 
     @Test
