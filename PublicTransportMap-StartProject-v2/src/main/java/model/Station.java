@@ -9,6 +9,7 @@ public class Station {
     private Set<Line> lines;
 
     private Location location;
+
     public Station(String nodeName) {
         this.stationName = nodeName;
         lines = new HashSet<>();

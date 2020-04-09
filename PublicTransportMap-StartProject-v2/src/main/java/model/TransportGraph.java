@@ -29,7 +29,6 @@ public class TransportGraph {
     public void addVertex(Station vertex) {
         // TODO
         stationList.add(vertex);
-//        System.out.println(stationList.size());
         stationIndices.put(vertex.getStationName(), stationList.indexOf(vertex));
     }
 
@@ -49,16 +48,6 @@ public class TransportGraph {
         numberOfConnections++;
 
     }
-
-//
-//
-//            // TODO
-//            numberOfConnections++;
-//            //from 6 to = 9
-//            Connection c = new Connection(stationList.get(from), stationList.get(to));
-//            connections[from][to] = c; //zet Connection object neer.
-//        }
-
 
     /**
      * Method to add an edge in the form of a connection between stations.
@@ -198,19 +187,14 @@ public class TransportGraph {
          * @return
          */
         public Builder addLinesToStations() {
-            // TODO
-            for (Station s : stationSet
-            ) {
-                //get the lines of that station DE STATIONS HEBBEN NOG GEEN LINES
-                for (Line line : s.getLines()) {
-                    //voeg lijn toe aan LINELIST(SET) IN STATION (CLASS)
-                    //Vraag me af of er nog iets moet gebeuren met StationList in de builder class
-                    //s.addLine(line);
-
-
+            for (Station station : stationSet) {
+                for (Line line : lineList) {
+                    for (Station stationOnLine : line.getStationsOnLine()) {
+                        if (stationOnLine.getStationName().equals(station.getStationName())) {
+                            station.addLine(line);
+                        }
+                    }
                 }
-
-
             }
             return this;
         }
@@ -253,6 +237,15 @@ public class TransportGraph {
                 Connection connection = new Connection(s, s2, weights[i], l);
                 connection.setLine(l);
                 connectionSet.add(connection);
+            }
+            return this;
+        }
+
+        public Builder addCoordsToConnections(int[] coords, int lineNumber) {
+            int locIndex = 0;
+            for (Station station: lineList.get(lineNumber).getStationsOnLine()
+                 ) {
+                station.setLocation(new Location(coords[locIndex++], coords[locIndex++]));
             }
             return this;
         }

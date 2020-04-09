@@ -105,7 +105,6 @@ public abstract class AbstractPathSearch {
                 transportType = lineType;
             }
         }
-        System.out.println("test");
     }
 
         /**
@@ -138,5 +137,22 @@ public abstract class AbstractPathSearch {
 
     public int[] getEdgeTo() {
         return edgeTo;
+    }
+    public double getTransferPenalty(int from, int to) {
+        System.out.println("eyo penalty");
+        double metroPenalty = 6.0;
+        double busPenalty = 3.0;
+        double noPenalty = 0.0;
+
+        if(edgeToType[from] != null && edgeToType[to] != null) {
+            if(!edgeToType[from].getName().equals(edgeToType[to].getName())) {
+                if(edgeToType[from].getType().equals(edgeToType[to].getType())) {
+                    return metroPenalty;
+                } else {
+                    return busPenalty;
+                }
+            }
+        }
+        return noPenalty;
     }
 }

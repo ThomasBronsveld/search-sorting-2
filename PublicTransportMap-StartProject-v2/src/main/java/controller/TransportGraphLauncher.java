@@ -1,5 +1,6 @@
 package controller;
 
+import graphalgorithms.AStar;
 import graphalgorithms.BreadhFirstSearch;
 import graphalgorithms.DepthFirstSearch;
 import graphalgorithms.DijkstraShortestPath;
@@ -78,6 +79,11 @@ public class TransportGraphLauncher {
         double[] purpleLineWeights = {6.2, 5.2, 3.8, 3.6};
         double[] blueLineWeights = {6.0, 5.3, 5.1, 3.3};
 
+        int[] redCords = {14, 1, 12, 3, 10, 5, 8, 8, 6, 9, 3, 10, 0, 11};
+        int[] blueCords = {9, 3, 7, 6, 6, 9, 3, 3, 5, 14};
+        int[] purpleCords = {2, 3, 4, 6, 7, 6, 8, 8, 10, 9};
+        int[] greenCords = {9, 0, 9, 3, 10, 5, 10, 9, 11, 11, 12, 13};
+        int[] yellowCords = {9, 0, 14, 1, 12, 13, 5, 14, 0, 11, 2, 3, 9, 0};
 
         Builder builder2 = new Builder();
         //red,blue,purple green yellow
@@ -101,13 +107,24 @@ public class TransportGraphLauncher {
         builder2.addWeightsToConnections(blueLineWeights, 1);
         builder2.addWeightsToConnections(purpleLineWeights, 2);
 
+        builder2.addCoordsToConnections(redCords, 0);
+        builder2.addCoordsToConnections(blueCords, 1);
+        builder2.addCoordsToConnections(purpleCords, 2);
+        builder2.addCoordsToConnections(greenCords, 3);
+        builder2.addCoordsToConnections(yellowCords, 4);
+
         TransportGraph transportGraph2 = builder2.build();
 //
-        System.out.println(transportGraph2.toString());
-
-        depthAndBreadthFirstSearch(transportGraph2, "Trojelaan", "Violetplantsoen");
-        DijkstraShortestPath dijkstra = new DijkstraShortestPath(transportGraph2, "Trojelaan", "Violetplantsoen");
+//        depthAndBreadthFirstSearch(transportGraph2, "Trojelaan", "Violetplantsoen");
+        DijkstraShortestPath dijkstra = new DijkstraShortestPath(transportGraph2, "Trojelaan", "Grootzeil");
         dijkstra.search();
+        System.out.println(dijkstra.getTotalWeight());
+
+        System.out.println("Result of A_Star:");
+        AStar asTest = new AStar(transportGraph2, "Trojelaan", "Grootzeil");
+        asTest.search();
+        asTest.printNodesInVisitedOrder();
+        System.out.printf("Total weight: %.2f and vertices visited: \n", asTest.getTotalweight());
     }
 
     /**
