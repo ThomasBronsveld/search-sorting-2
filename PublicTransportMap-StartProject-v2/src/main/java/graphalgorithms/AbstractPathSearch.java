@@ -92,6 +92,14 @@ public abstract class AbstractPathSearch {
     }
 
     /**
+     *
+     * @return
+     */
+    public int countVertices() {
+        return nodesVisited.size();
+    }
+
+    /**
      * Method to count the number of transfers in a path of vertices.
      * Uses the line information of the connections between stations.
      * If to consecutive connections are on different lines there was a transfer.

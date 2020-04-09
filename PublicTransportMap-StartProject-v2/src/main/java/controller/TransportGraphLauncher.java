@@ -121,7 +121,35 @@ public class TransportGraphLauncher {
         AStar asTest = new AStar(transportGraph2, "Trojelaan", "Grootzeil");
         asTest.search();
         asTest.printNodesInVisitedOrder();
-        System.out.printf("Total weight: %.2f and vertices visited: \n", asTest.getTotalweight());
+        System.out.printf("Total weight: %.2f and vertices visited: %d\n", asTest.getTotalweight(), asTest.countVertices());
+        System.out.println();
+
+
+        // Full overview
+
+        System.out.printf("%-10s%-10s%-10s\n", "Dijkstra", "A_Star", "Path");
+        int dTotal = 0, aTotal = 0;
+        for (Station from : transportGraph2.getStationList()) {
+            for (Station to : transportGraph2.getStationList()) {
+                if (!from.getStationName().equals(to)) {
+                    // Dijkstra test
+                    dijkstra = new DijkstraShortestPath(transportGraph2, from.getStationName(), to.getStationName());
+                    dijkstra.search();
+                    dTotal += dijkstra.countVertices();
+
+                    // A_Star test
+                    asTest = new AStar(transportGraph2, from.getStationName(), to.getStationName());
+                    asTest.search();
+                    aTotal += asTest.countVertices();
+
+                    System.out.printf("%-10s%-10s%-10s\n", dijkstra.countVertices(), asTest.countVertices(), dijkstra);
+                }
+            }
+        }
+
+        System.out.println("\n------------------");
+        System.out.printf("Dijkstra:\t%d\nA_Star:\t\t%d\n", dTotal, aTotal);
+        System.out.println("------------------");
     }
 
     /**
